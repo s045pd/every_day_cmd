@@ -9,6 +9,8 @@
 
 > 利用cmd数量丰富的tldr库，生成一条随机命令的用法。
 
+> en_doc [README_en.md](README_en.md)
+
 ## 环境依赖
 
 - Sanic_Cors >= 0.9.9.post1
