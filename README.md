@@ -16,6 +16,7 @@
 - Sanic_Cors >= 0.9.9.post1
 - GitPython >= 3.0.3
 - sanic >= 19.9.0
+- ua_parser >= 0.8.0
 
 ## 安装
 
@@ -34,9 +35,11 @@ python3 server.py
 
 ```
 
-然后访问 ```http://127.0.0.1:8000/api/random_code```
+然后访问 ```http://127.0.0.1:8000/api/random_code``` 他将根据你的user-agent来识别你的os并推送相关命令。
 
 <img src="media/every_day_cmd.gif">
+
+并且你可以指定系统，例如 ```?os=linux,osx,common,window,sunos``` 或者```?os=all``` 来指定全部。
 
 ## 📝 License
 

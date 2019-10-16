@@ -1,3 +1,4 @@
 Sanic_Cors==0.9.9.post1
+ua_parser==0.8.0
 GitPython==3.0.3
 sanic==19.9.0

@@ -14,6 +14,7 @@
 - Sanic_Cors >= 0.9.9.post1
 - GitPython >= 3.0.3
 - sanic >= 19.9.0
+- ua_parser >= 0.8.0
 
 ## Install
 
@@ -32,9 +33,12 @@ python3 server.py
 
 ```
 
-then we open the page ```http://127.0.0.1:8000/api/random_code```
+then we open the page ```http://127.0.0.1:8000/api/random_code``` it will identify your os name based on your user-agent and push the relevant commands.
 
 <img src="media/every_day_cmd.gif">
+
+and you can specific the os like ```?os=linux,osx,common,window,sunos``` or use ```?os=all``` to all.
+
 ## 📝 License
 
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
