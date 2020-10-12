@@ -1,4 +1,6 @@
-Sanic_Cors==0.9.9.post1
-ua_parser==0.8.0
-GitPython==3.0.3
-sanic==19.9.0
+Sanic_Cors==0.10.0.post3
+sanic==20.9.0
+ua_parser==0.10.0
+GitPython==3.1.9
+Markdown==3.3
+weasyprint==51
