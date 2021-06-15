@@ -1,6 +1,7 @@
-Sanic_Cors==0.10.0.post3
-sanic==20.9.0
+imgkit==1.2.2
+Markdown==3.3.4
 ua_parser==0.10.0
-GitPython==3.1.9
-Markdown==3.3
-weasyprint==51
+APScheduler==3.6.3
+fastapi==0.65.2
+GitPython==3.1.17
+uvicorn

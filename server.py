@@ -1,27 +1,41 @@
-import pathlib
-import random
+from itertools import chain
+from pathlib import Path
+from random import choice
+from typing import Optional
 
+from apscheduler.schedulers.background import BackgroundScheduler
 from git import Repo
-from sanic import Sanic
-from sanic.response import json
-from sanic_cors import CORS, cross_origin
 from ua_parser import user_agent_parser
 
 from conf import config
-from itertools import chain
+from fastapi import FastAPI, Header
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, HTMLResponse
+from imgkit import from_string
 
-root_path = pathlib.Path(config.root_git_path)
+template = """<html><head><style>a{text-decoration:none}.every_day_cmd{display:inline-block;height:30px;line-height:30px;padding:0 20px;color:rgb(73,80,87);font-size:13px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.every_day_cmd code{color:rgb(232,62,140);background:none;border:none}</style></head><body><a href="https://github.com/aoii103/every_day_cmd"><div id="every_day_cmd"class="every_day_cmd"title="字字珠玑，每日一记。">$codes$</div></a><div class="divider"></div></body></html>"""
 
-if not root_path.exists():
-    Repo.clone_from(config.root_git_url, root_path)
-else:
-    Repo(root_path).git().pull()
+app = FastAPI()
+origins = ("*",)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=("*",),
+    allow_headers=("*",),
+)
 
-app = Sanic(__name__)
-CORS(app)
+root_path = Path(config.root_git_path)
 
 
-def check_os(user_agent_str):
+def update_repo(uri: str, path: Path) -> None:
+    if not path.exists():
+        Repo.clone_from(uri, path)
+    else:
+        Repo(path).git().pull()
+
+
+def check_os(user_agent_str: str) -> list:
     result = config.types_by_ua[-1:]
     family = user_agent_parser.ParseOS(user_agent_str)["family"].lower()
     os_names = dict(
@@ -32,27 +46,50 @@ def check_os(user_agent_str):
     return result
 
 
-@app.route("api/random_code", methods=["GET", "OPTIONS"])
-async def random_code(request):
-    types_by_user = [
-        config.types_by_user.get(key, "common")
-        for key in request.args.get("os", "").split(",")
-    ]
-    types = types_by_user if types_by_user else check_os(request.headers["user-agent"])
-    files = [pathlib.Path(config.root_file).glob(f"{item}/*.md") for item in set(types)]
-    target = random.choice(list(chain(*files)))
+def get_random_code(types: list) -> dict:
+    files = [Path(config.root_file).glob(f"{item}/*.md") for item in set(types)]
+    target = choice(list(chain(*files)))
     with target.open("r") as md:
         data = md.read().split("- ")[1:]
-        description, code = random.choice(data).strip().split("\n\n")
-        return json(
-            dict(
-                zip(
-                    ("system", "type", "description", "code"),
-                    (target.parent.name, target.name, description[:-1], code[1:-1]),
-                )
+        description, code = choice(data).strip().split("\n\n")
+        return dict(
+            zip(
+                ("system", "type", "description", "code"),
+                (target.parent.name, target.name, description[:-1], code[1:-1]),
             )
         )
 
 
-if __name__ == "__main__":
-    app.run(host=config.ip, port=config.port)
+def check_with_browser(user_agent: str, os: str) -> list:
+    types_by_user = [config.types_by_user.get(key, "common") for key in os.split(",")]
+    return types_by_user if types_by_user else check_os(user_agent)
+
+
+@app.get("/")
+async def random_code(user_agent: Optional[str] = Header(None), os: str = ""):
+    return get_random_code(check_with_browser(user_agent, os))
+
+
+@app.get("/html", response_class=HTMLResponse)
+async def get_html(user_agent: Optional[str] = Header(None), os: str = ""):
+    data = await random_code(user_agent, os)
+    return template.replace(
+        "$codes$", "🍺 {description}: <code>{code}</code>".format(**data)
+    )
+
+
+@app.get("/png")
+async def get_png(user_agent: Optional[str] = Header(None), os: str = ""):
+    from_string(await get_html(user_agent, os), config.out_file)
+    return FileResponse(config.out_file)
+
+
+scheduler = BackgroundScheduler()
+scheduler.add_job(
+    update_repo,
+    args=(config.root_git_url, root_path),
+    trigger="interval",
+    hours=24,
+    id="updateTLDR",
+)
+scheduler.start()
