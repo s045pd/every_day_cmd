@@ -14,7 +14,7 @@
 - wkhtmltopdf
 - requirements.txt
 
-## Install
+## Install & Useage
 
 ```sh
 git clone https://github.com/s045pd/every_day_cmd.git
@@ -24,15 +24,8 @@ cd every_day_cmd
 chmod +x run.sh && ./run.sh
 ```
 
-## Useage
-
-```sh
-python3 server.py
-
-```
 
 then we open the page ```http://x.x.x.x:12308``` it will identify your os name based on your user-agent and push the relevant commands.
-
 
 And we provide the `\html` and '\png' path as generate interface , how to use it is up to you.
 

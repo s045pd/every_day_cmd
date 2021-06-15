@@ -21,7 +21,10 @@ elif [[ "$OSTYPE" =~ ^linux ]]; then
 
 	if [[ $SYSTYPE == '"CentOS Linux"' ]]; then
 		if [[ ! $(sudo yum list | grep $SOFT) ]]; then
-			sudo yum -y install $SOFT
+			sudo yum install -y xorg-x11-fonts-75dpi
+	        sudo yum install -y xorg-x11-fonts-Type1
+	        wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.2.1/wkhtmltox-0.12.2.1_linux-centos7-amd64.rpm
+	        rpm -Uvh wkhtmltox-0.12.2.1_linux-centos7-amd64.rpm
 		fi
 	elif [[ $SYSTYPE == '"Ubuntu"' ]]; then
 		if [[ ! $(sudo apt-get list | grep $SOFT) ]]; then
@@ -42,3 +45,4 @@ echo 'Starting'
 nohup $START_CMD >$LOG_PATH 2>&1 &
 sleep 3
 cat $LOG_PATH
+# tail -f $LOG_PATH
