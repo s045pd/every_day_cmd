@@ -8,7 +8,7 @@ echo 'Setup virtual environment'
 $PYTHON_PATH -m venv venv
 if [ ! -d $VENV_PATH ]; then
 	source venv/bin/activate
-	$PYTHON_PATH -m pip install -r requirements
+	pip install -r requirements.txt
 fi
 
 echo 'Installing '$SOFT
