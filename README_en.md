@@ -19,7 +19,7 @@
 ```sh
 git clone https://github.com/s045pd/every_day_cmd.git
 
-cd every_day_code
+cd every_day_cmd
 
 chmod +x run.sh && ./run.sh
 ```

@@ -28,11 +28,14 @@ app.add_middleware(
 root_path = Path(config.root_git_path)
 
 
-def update_repo(uri: str, path: Path) -> None:
-    if not path.exists():
-        Repo.clone_from(uri, path)
+def update_repo() -> None:
+    if not root_path.exists():
+        Repo.clone_from(config.root_git_url, root_path)
     else:
-        Repo(path).git().pull()
+        Repo(root_path).git().pull()
+
+
+
 
 
 def check_os(user_agent_str: str) -> list:
@@ -87,9 +90,9 @@ async def get_png(user_agent: Optional[str] = Header(None), os: str = ""):
 scheduler = BackgroundScheduler()
 scheduler.add_job(
     update_repo,
-    args=(config.root_git_url, root_path),
     trigger="interval",
     hours=24,
     id="updateTLDR",
 )
 scheduler.start()
+update_repo()

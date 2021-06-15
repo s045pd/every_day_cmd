@@ -1,4 +1,4 @@
-START_CMD="uvicorn server:app --port 12308"
+START_CMD="uvicorn server:app --host 0.0.0.0 --port 12308"
 PYTHON_PATH="python3"
 VENV_PATH="venv"
 LOG_PATH="/tmp/every_day_cmd.log"
