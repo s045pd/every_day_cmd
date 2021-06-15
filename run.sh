@@ -5,11 +5,13 @@ LOG_PATH="/tmp/every_day_cmd.log"
 SOFT="wkhtmltopdf"
 
 echo 'Setup virtual environment'
-$PYTHON_PATH -m venv venv
+
 if [ ! -d $VENV_PATH ]; then
-	source venv/bin/activate
-	pip install -r requirements.txt
+	$PYTHON_PATH -m venv venv
 fi
+
+source venv/bin/activate
+pip install -r requirements.txt
 
 echo 'Installing '$SOFT
 if [[ "$OSTYPE" =~ ^darwin ]]; then
