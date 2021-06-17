@@ -7,13 +7,12 @@
     <a target="_blank" href="FastAPI" title="FastAPI"><img src="https://img.shields.io/badge/power_by-FastAPI-Green.svg"></a></p>
 </p>
 
-> 利用cmd数量丰富的tldr库，生成一条随机命令的用法。
-
+> 利用 cmd 数量丰富的 tldr 库，生成一条随机命令的用法。
 
 ## 环境依赖
 
 - wkhtmltopdf
-- requirements.txt所有
+- requirements.txt 所有
 
 ## 安装及使用
 
@@ -25,33 +24,26 @@ cd every_day_cmd
 chmod +x run.sh && ./run.sh
 ```
 
-然后访问 ```http://x.x.x.x:12308``` 他将根据你的user-agent来识别你的os并返回推荐命令。
+然后访问 `http://x.x.x.x:12308` 他将根据你的 user-agent 来识别你的 os 并返回推荐命令。
 
 并且我们提供 `\html` 及 `\png` 生成接口，具体怎么用就看你的啦
-
 
 <img src="media/every_day_cmd.gif">
 
 并且你可以指定系统，例如 `?os=linux,osx,common,window,sunos` 或者`?os=all` 来指定全部。
 
-
-
-
 ```md
-
 ### 🤡 Funny code you will learn
 
 ![Every Day CMD](https://pyocean.com/every_day_cmd/png)
-
 ```
 
-甚至于可以将其加入你的Github首页Readme
-
+甚至于可以将其加入你的 Github 首页 Readme
 
 ## 📝 License
 
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
 
-***
+---
 
-如果您觉得这个脚本对您有用，可别忘了star哟🐶。
+如果您觉得这个脚本对您有用，可别忘了 star 哟 🐶。

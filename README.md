@@ -26,23 +26,18 @@ cd every_day_cmd
 chmod +x run.sh && ./run.sh
 ```
 
-
-Then we open the page ```http://x.x.x.x:12308``` it will identify your os name based on your user-agent and push the relevant commands.
+Then we open the page `http://x.x.x.x:12308` it will identify your os name based on your user-agent and push the relevant commands.
 
 And we provide the `\html` and '\png' path as generate interface , how to use it is up to you.
 
 <img src="media/every_day_cmd.gif">
 
-And you can specific the os like ```?os=linux,osx,common,window,sunos``` or use ```?os=all``` to all.
-
-
+And you can specific the os like `?os=linux,osx,common,window,sunos` or use `?os=all` to all.
 
 ```md
-
 ### 🤡 Funny code you will learn
 
 ![Every Day CMD](https://pyocean.com/every_day_cmd/png)
-
 ```
 
 Even for your github Readme page !
@@ -51,6 +46,6 @@ Even for your github Readme page !
 
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
 
-***
+---
 
 If you think this script is useful to you, don't forget star ~ 🐶.

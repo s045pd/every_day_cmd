@@ -13,6 +13,7 @@ class conf:
         "all": "**",
     }
 
-    out_file = 'media/out.png'
+    out_file = "media/out.png"
+
 
 config = conf
