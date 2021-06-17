@@ -35,6 +35,18 @@ chmod +x run.sh && ./run.sh
 
 并且你可以指定系统，例如 `?os=linux,osx,common,window,sunos` 或者`?os=all` 来指定全部。
 
+
+甚至于可以将其加入你的Github首页Readme
+
+```md
+
+### 🤡 Funny code you will learn
+
+![Every Day CMD](https://pyocean.com/every_day_cmd/png)
+
+```
+
+
 ## 📝 License
 
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.

@@ -33,6 +33,16 @@ And we provide the `\html` and '\png' path as generate interface , how to use it
 
 and you can specific the os like ```?os=linux,osx,common,window,sunos``` or use ```?os=all``` to all.
 
+even for your github Readme page !
+
+```md
+
+### 🤡 Funny code you will learn
+
+![Every Day CMD](https://pyocean.com/every_day_cmd/png)
+
+```
+
 ## 📝 License
 
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
