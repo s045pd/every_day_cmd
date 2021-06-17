@@ -13,7 +13,7 @@
 
 ## Requirement
 
-- wkhtmltopdf
+- [wkhtmltopdf](https://wkhtmltopdf.org/)
 - requirements.txt
 
 ## Install & Useage
@@ -41,6 +41,12 @@ And you can specific the os like `?os=linux,osx,common,window,sunos` or use `?os
 ```
 
 Even for your github Readme page !
+
+## TODO
+
+- `/svg`
+
+
 
 ## 📝 License
 

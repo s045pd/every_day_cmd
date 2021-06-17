@@ -11,7 +11,7 @@
 
 ## 环境依赖
 
-- wkhtmltopdf
+- [wkhtmltopdf](https://wkhtmltopdf.org/)
 - requirements.txt 所有
 
 ## 安装及使用
@@ -39,6 +39,11 @@ chmod +x run.sh && ./run.sh
 ```
 
 甚至于可以将其加入你的 Github 首页 Readme
+
+## TODO
+
+- `/svg`
+
 
 ## 📝 License
 
