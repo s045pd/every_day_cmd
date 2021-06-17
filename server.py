@@ -1,3 +1,4 @@
+from datetime import datetime
 from itertools import chain
 from pathlib import Path
 from random import choice
@@ -5,13 +6,13 @@ from time import time
 from typing import Optional
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from fastapi import FastAPI, Header
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from git import Repo
 from ua_parser import user_agent_parser
 
 from conf import config
+from fastapi import FastAPI, Header, Response
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from imgkit import from_string
 
 template = """<html><head><style>a{text-decoration:none}.every_day_cmd{display:inline-block;height:30px;line-height:30px;padding:0 20px;color:rgb(73,80,87);font-size:13px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.every_day_cmd code{color:rgb(232,62,140);background:none;border:none}</style></head><body><a href="https://github.com/aoii103/every_day_cmd"><div id="every_day_cmd"class="every_day_cmd"title="字字珠玑，每日一记。">$codes$</div></a><div class="divider"></div></body></html>"""
@@ -29,11 +30,11 @@ app.add_middleware(
 root_path = Path(config.root_git_path)
 
 
-def update_repo() -> None:
+def update_repo(init=False) -> None:
     if not root_path.exists():
         print("start clone!")
         Repo.clone_from(config.root_git_url, root_path)
-    else:
+    elif not init:
         print("start pull!")
         Repo(root_path).git().pull()
 
@@ -84,7 +85,13 @@ async def get_html(user_agent: Optional[str] = Header(None), os: str = ""):
 @app.get("/png")
 async def get_png(user_agent: Optional[str] = Header(None), os: str = ""):
     from_string(await get_html(user_agent, os), config.out_file)
-    return FileResponse(config.out_file)
+    return FileResponse(
+        config.out_file,
+        headers={
+            "cache-control": "no-cache,max-age=0,no-store,s-maxage=0,proxy-revalidate",
+            "expires": datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT"),
+        },
+    )
 
 
 @app.get("/flush")
@@ -100,4 +107,4 @@ scheduler.add_job(
     id="updateTLDR",
 )
 scheduler.start()
-update_repo()
+update_repo(True)
