@@ -15,8 +15,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from imgkit import from_string
 import pytz
+from tzlocal import get_localzone
 
-current_timezone = pytz.timezone(datetime.now(pytz.timezone('UTC')).astimezone().tzinfo)
+current_timezone = pytz.timezone( get_localzone().zone)
 
 template = """<html><head><style>a{text-decoration:none}.every_day_cmd{display:inline-block;height:30px;line-height:30px;padding:0 20px;color:rgb(73,80,87);font-size:13px;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.every_day_cmd code{color:rgb(232,62,140);background:none;border:none}</style></head><body><a href="https://github.com/aoii103/every_day_cmd"><div id="every_day_cmd"class="every_day_cmd"title="字字珠玑，每日一记。">$codes$</div></a><div class="divider"></div></body></html>"""
 
