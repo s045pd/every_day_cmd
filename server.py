@@ -108,7 +108,7 @@ scheduler.add_job(
     update_repo,
     trigger="interval",
     hours=24,
-    timezone=current_timezone
+    timezone=current_timezone,
     id="updateTLDR",
 )
 scheduler.start()
